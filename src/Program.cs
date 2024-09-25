@@ -1,4 +1,5 @@
-using BackEndForFrontEnd.Data.Interfaces;
+using BackEndForFrontEnd.Infraestructure;
+using BackEndForFrontEnd.RequestPipeline;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfraestructure(builder.Configuration);
 
 var app = builder.Build();
+app.InitializeDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
