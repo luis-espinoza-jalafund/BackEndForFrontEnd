@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: bff-group-10-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=BffGroup10DB;Username=group10;Password=bffgroup10
+    volumes:
+      - ~/.vscode-server:/root/.vscode-server
+
+  db:
+    container_name: bff-group-10-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=group10
+      - POSTGRES_PASSWORD=bffgroup10
+      - POSTGRES_DB=BffGroup10DB
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data: 
