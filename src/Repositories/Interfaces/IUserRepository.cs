@@ -4,5 +4,5 @@ namespace BackEndForFrontEnd.Repositories.Interfaces;
 
 public interface IUserRepository : IRepository<User>
 {
-    Task<User> GetByNameAsync(string name);
+    Task<User?> GetByNameAsync(string name);
 }
