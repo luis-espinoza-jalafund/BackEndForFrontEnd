@@ -19,7 +19,6 @@ namespace BackEndForFrontEnd.Controllers
         public async Task<IActionResult> AddNews([FromBody] CreateNews news)
         {
             var newNews = await _newsService.AddNewsAsync(news);
-            Console.WriteLine(newNews.Category);
             var response = ResponseNews.FromDomain(newNews);
             return CreatedAtAction(nameof(GetNewsById), new { Id = newNews.Id }, response);
         }
@@ -75,5 +74,46 @@ namespace BackEndForFrontEnd.Controllers
             await _newsService.DeleteNewsAsync(id);
             return NoContent();
         }
+
+        [HttpGet("latest/{quantity}")]
+        [ProducesResponseType(typeof(IEnumerable<ResponseNews>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetLatestNews(int quantity)
+        {
+            var newsItems = await _newsService.GetLatestNewsAsync(quantity);
+            var response = newsItems.Select(n => ResponseNews.FromDomain(n));
+            return Ok(response);
+        }
+
+        [HttpGet("search/{search}")]
+        [ProducesResponseType(typeof(IEnumerable<ResponseNews>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> SearchNews(string search)
+        {
+            var newsItems = await _newsService.SearchNewsAsync(search);
+            var response = newsItems.Select(n => ResponseNews.FromDomain(n));
+            return Ok(response);
+        }
+
+        [HttpGet("paginated")]
+        [ProducesResponseType(typeof(PaginatedResponse<ResponseNews>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPaginatedNews(int pageNumber, int pageSize)
+        {
+            var (newsItems, totalCount) = await _newsService.GetPaginatedNewsAsync(pageNumber, pageSize);
+            
+            if (!newsItems.Any())
+            {
+                return NotFound("No news found for the requested page.");
+            }
+
+            var response = new PaginatedResponse<ResponseNews>
+            {
+                Items = newsItems.Select(n => ResponseNews.FromDomain(n)).ToList(),
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            };
+
+            return Ok(response);
+        }
+
     }
 }

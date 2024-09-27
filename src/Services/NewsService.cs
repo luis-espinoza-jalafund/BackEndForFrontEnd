@@ -65,7 +65,7 @@ public class NewsService : INewsService
         var news = await _newsRepository.GetByIdAsync(id);
         if(news == null)
         {
-            throw new Exception("DKJAJHDAJKDS");
+            throw new ArgumentException("News not found");
         }
         return news;
     }
