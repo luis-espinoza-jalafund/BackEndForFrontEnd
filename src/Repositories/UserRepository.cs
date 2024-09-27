@@ -17,15 +17,15 @@ public class UserRepository : IUserRepository
     public async Task<User?> CreateAsync(User entity)
     {
         const string sql = @"
-            INSERT INTO Users (Name, Description, ProfileImage)
-            VALUES (@Name, @Description, @ProfileImage)
+            INSERT INTO Users (Id, Name, Description, ProfileImage)
+            VALUES (@Id, @Name, @Description, @ProfileImage)
             RETURNING Id, Name, Description, ProfileImage";
 
         using var connection = await _dbConnection.CreateConnectionAsync();
         return await connection.QueryFirstOrDefaultAsync<User>(sql, entity);
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         const string sql = "DELETE FROM Users WHERE Id = @Id";
 
@@ -42,7 +42,7 @@ public class UserRepository : IUserRepository
         return await connection.QueryAsync<User>(sql);
     }
 
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(Guid id)
     {
         const string sql = "SELECT Id, Name, Description, ProfileImage FROM Users WHERE Id = @Id";
 

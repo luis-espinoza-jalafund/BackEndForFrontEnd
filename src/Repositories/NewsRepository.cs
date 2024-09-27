@@ -17,15 +17,15 @@ public class NewsRepository : INewsRepository
     public async Task<News?> CreateAsync(News entity)
     {
         const string sql = @"
-            INSERT INOT News (Title, Content, Images, Category, CreationDate)
-            VALUES (@Title, @Content, @Images, @Category, @CreationDate)
+            INSERT INTO News (Id, Title, Content, Images, Category, CreationDate)
+            VALUES (@Id, @Title, @Content, @Images, @Category, @CreationDate)
             RETURNING Id, Title, Content, Images, Category, CreationDate";
         
         using var connection = await _dbConnection.CreateConnectionAsync();
         return await connection.QuerySingleOrDefaultAsync<News>(sql, entity);
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         const string sql = "DELETE FROM News WHERE Id = @Id";
 
@@ -42,7 +42,7 @@ public class NewsRepository : INewsRepository
         return await connection.QueryAsync<News>(sql);
     }
 
-    public async Task<News?> GetByIdAsync(int id)
+    public async Task<News?> GetByIdAsync(Guid id)
     {
         const string sql = "SELECT Id, Title, Content, Images, Category, CreationDate FROM News WHERE Id = @Id";
 

@@ -12,7 +12,7 @@ services:
       - db
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=db;Database=BffGroup10DB;Username=group10;Password=bffgroup10
+      - ConnectionStrings__DefaultConnection=Host=localhost;Database=BffGroup10DB;Username=group10;Password=bffgroup10
     volumes:
       - ~/.vscode-server:/root/.vscode-server
 

@@ -3,6 +3,8 @@ using BackEndForFrontEnd.Data.Concretes;
 using BackEndForFrontEnd.Data.Interfaces;
 using BackEndForFrontEnd.Repositories;
 using BackEndForFrontEnd.Repositories.Interfaces;
+using BackEndForFrontEnd.Services;
+using BackEndForFrontEnd.Services.Interfaces;
 
 namespace BackEndForFrontEnd.Infraestructure;
 
@@ -12,7 +14,8 @@ public static class DependencyInjection
     {
         services
             .AddDataBase(configuration)
-            .AddRepositories();
+            .AddRepositories()
+            .AddServices();
         return services;
     }
 
@@ -28,6 +31,13 @@ public static class DependencyInjection
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<INewsRepository, NewsRepository>();
+        return services;
+    }
+
+    private static IServiceCollection AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<INewsService, NewsService>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }
