@@ -17,8 +17,8 @@ public class UserRepository : IUserRepository
     public async Task<User?> CreateAsync(User entity)
     {
         const string sql = @"
-            INSERT INTO Users (Name, Description, ProfileImage)
-            VALUES (@Name, @Description, @ProfileImage)
+            INSERT INTO Users (Id, Name, Description, ProfileImage)
+            VALUES (@Id, @Name, @Description, @ProfileImage)
             RETURNING Id, Name, Description, ProfileImage";
 
         using var connection = await _dbConnection.CreateConnectionAsync();

@@ -37,6 +37,7 @@ public static class DependencyInjection
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<INewsService, NewsService>();
+        services.AddScoped<IUserService, UserService>();
         return services;
     }
 }
