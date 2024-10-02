@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home/Home'
-import User from './components/User/User';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import Layout from './components/Layout/Layout';
+import Banner from './components/Banner/Banner';
 
 function App() {
   return (
