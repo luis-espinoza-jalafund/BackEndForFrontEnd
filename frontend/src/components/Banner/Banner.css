@@ -44,6 +44,14 @@
     .category {
         font-size: 3.5rem;
     }
+
+    .container-images a {
+        width: 4%;
+    }
+
+    .container-images img {
+        width: 100%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -55,4 +63,11 @@
         font-size: 2.5rem;
     }
 
+    .container-images a {
+        width: 10%;
+    }
+
+    .container-images img {
+        width: 100%;
+    }
 }

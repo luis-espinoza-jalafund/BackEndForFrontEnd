@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -11,11 +12,11 @@ function Header() {
         <label className='redirect'>
           Politics
         </label>
+        <Link to='/' className='redirect'>
+          Home
+        </Link>
         <label className='redirect'>
           Technology
-        </label>
-        <label className='redirect'>
-          Soccer
         </label>
         <label className='redirect'>
           Health

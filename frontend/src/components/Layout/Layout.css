@@ -6,19 +6,17 @@
   }
   
   .content-container {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1%;
   }
   
   .content-box {
     background-color: white;
-    width: 80%;
-    max-width: 1200px;
-    padding: 20px;
+    width: 90vw;
+    padding: 2rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
-    margin: 40px 0;
   }
   
