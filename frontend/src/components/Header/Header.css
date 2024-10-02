@@ -1,0 +1,55 @@
+.app-header {
+    position: sticky;   
+    display: flex;
+    justify-content: center;
+    top: 0;
+    padding-top: 1.7rem;
+    padding-bottom: 1.7rem;
+    background-color: #FFB67C;
+    
+}
+  
+.nav-links {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    place-items: center;
+    gap: 1.4rem;
+}
+
+.redirect {
+    color: black;
+    font-size: 1.7rem;
+    cursor: pointer;
+    font-family: "Bree Serif", serif;
+    font-style: normal;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .redirect {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-links {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .app-header {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .redirect {
+        font-size: 1rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid black;
+    }
+}

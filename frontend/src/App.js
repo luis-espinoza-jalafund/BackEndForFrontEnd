@@ -1,17 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home/Home'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import Layout from './components/Layout/Layout';
+import Home from './components/Home/Home';
 import User from './components/User/User';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/users' element={<User />}></Route>
+        <Route path='/' element={
+            <Layout>
+              <Home />
+            </Layout>
+          } 
+        />
+        <Route path='/users' element={
+            <Layout category="Users">
+              <User />
+            </Layout>
+          } 
+        />
       </Routes>
-    </Router>
-    
+    </Router>    
   );
 }
 
