@@ -14,9 +14,9 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<IEnumerable<User>> GetAllUsersAsync()
+    public async Task<IEnumerable<User>> GetAllUsersAsync(int? limit = null)
     {
-        return await _userRepository.GetAllAsync();
+        return await _userRepository.GetAllAsync(limit);
     }
 
     public async Task<User?> GetUserByIdAsync(Guid id)

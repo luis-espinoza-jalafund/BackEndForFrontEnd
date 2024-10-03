@@ -34,12 +34,16 @@ public class NewsRepository : INewsRepository
         return affectedRows > 0;
     }
 
-    public async Task<IEnumerable<News>> GetAllAsync()
+    public async Task<IEnumerable<News>> GetAllAsync(int? limit = null)
     {
-        const string sql = "SELECT Id, Title, Content, Images, Category, CreationDate FROM News";
+        string sql = "SELECT Id, Title, Content, Images, Category, CreationDate FROM News";
 
+         if (limit.HasValue && limit > 0)
+        {
+            sql += " LIMIT @Limit";
+        }
         using var connection = await _dbConnection.CreateConnectionAsync();
-        return await connection.QueryAsync<News>(sql);
+        return await connection.QueryAsync<News>(sql, new { Limit = limit });
     }
 
     public async Task<News?> GetByIdAsync(Guid id)
@@ -62,15 +66,18 @@ public class NewsRepository : INewsRepository
         return await connection.QueryAsync<News>(sql, new { Quantity = quantity });
     }
 
-    public async Task<IEnumerable<News>> GetNewsByCategoryAsync(string category)
+    public async Task<IEnumerable<News>> GetNewsByCategoryAsync(string category, int? limit = null)
     {
-        const string sql = @"
+        string sql = @"
             SELECT Id, Title, Content, Images, Category, CreationDate 
             FROM News 
             WHERE Category = @Category";
-
+        if (limit.HasValue && limit > 0)
+        {
+            sql += " LIMIT @Limit";
+        }
         using var connection = await _dbConnection.CreateConnectionAsync();
-        return await connection.QueryAsync<News>(sql, new { Category = category });
+        return await connection.QueryAsync<News>(sql, new { Category = category, Limit = limit });
     }
 
     public async Task<(IEnumerable<News> News, int TotalCount)> GetPaginatedNewsAsync(int pageNumber, int pageSize)
@@ -93,15 +100,19 @@ public class NewsRepository : INewsRepository
         return (news, totalCount);
     }
 
-    public async Task<IEnumerable<News>> SearchNewsAsync(string search)
+    public async Task<IEnumerable<News>> SearchNewsAsync(string search, int? limit = null)
     {
-        const string sql = @"
+        string sql = @"
             SELECT Id, Title, Content, Images, Category, CreationDate 
             FROM News 
             WHERE Title ILIKE @Search OR Content ILIKE @Search";
+        if (limit.HasValue && limit > 0)
+        {
+            sql += " LIMIT @Limit";
+        }
 
         using var connection = await _dbConnection.CreateConnectionAsync();
-        return await connection.QueryAsync<News>(sql, new { Search = $"%{search}%" });
+        return await connection.QueryAsync<News>(sql, new { Search = $"%{search}%", Limit = limit });
     }
 
     public async Task<News?> UpdateAsync(News entity)

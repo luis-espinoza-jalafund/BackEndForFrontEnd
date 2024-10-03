@@ -34,12 +34,17 @@ public class UserRepository : IUserRepository
         return affectedRows > 0;
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<User>> GetAllAsync(int? limit = null)
     {
-        const string sql = "SELECT Id, Name, Description, ProfileImage FROM Users";
+        string sql = "SELECT Id, Name, Description, ProfileImage FROM Users";
+
+        if(limit.HasValue && limit > 0)
+        {
+            sql += " LIMIT @Limit";
+        }
 
         using var connection = await _dbConnection.CreateConnectionAsync();
-        return await connection.QueryAsync<User>(sql);
+        return await connection.QueryAsync<User>(sql, new { Limit = limit });
     }
 
     public async Task<User?> GetByIdAsync(Guid id)
