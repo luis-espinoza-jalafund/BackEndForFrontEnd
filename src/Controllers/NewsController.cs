@@ -1,6 +1,7 @@
 using Domain.DTOs;
 using BackEndForFrontEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace BackEndForFrontEnd.Controllers
 {
@@ -11,6 +12,19 @@ namespace BackEndForFrontEnd.Controllers
         public NewsController(INewsService newsService)
         {
             _newsService = newsService;
+        }
+
+        private bool IsMobileRequest(HttpRequest request)
+        {
+            var userAgent = request.Headers["User-Agent"].ToString();
+            return Regex.IsMatch(userAgent, 
+                "(android|bb\\d+|meego).+mobile|" +
+                "avantgo|bada\\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|" +
+                "ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|" +
+                "opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\\/|plucker|pocket|psp|" +
+                "series(4|6)0|symbian|treo|up\\.(browser|link)|vodafone|wap|windows ce|" +
+                "xda|xiino", 
+                RegexOptions.IgnoreCase);
         }
 
         [HttpPost]
@@ -41,7 +55,9 @@ namespace BackEndForFrontEnd.Controllers
         [ProducesResponseType(typeof(IEnumerable<ResponseNews>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllNews()
         {
-            var newsItems = await _newsService.GetAllNewsAsync();
+            var isMobile = IsMobileRequest(Request);
+            int? limit = isMobile ? 20 : null;
+            var newsItems = await _newsService.GetAllNewsAsync(limit);
             var response = newsItems.Select(n => ResponseNews.FromDomain(n));
             return Ok(response);
         }
@@ -51,7 +67,9 @@ namespace BackEndForFrontEnd.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetNewsByCategory(string category)
         {
-            var newsItems = await _newsService.GetNewsByCategoryAsync(category);
+            var isMobile = IsMobileRequest(Request);
+            int? limit = isMobile ? 15 : null;
+            var newsItems = await _newsService.GetNewsByCategoryAsync(category, limit);
             var response = newsItems.Select(n => ResponseNews.FromDomain(n));
             return Ok(response);
         }
@@ -88,7 +106,9 @@ namespace BackEndForFrontEnd.Controllers
         [ProducesResponseType(typeof(IEnumerable<ResponseNews>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SearchNews(string search)
         {
-            var newsItems = await _newsService.SearchNewsAsync(search);
+            var isMobile = IsMobileRequest(Request);
+            int? limit = isMobile ? 20 : null;
+            var newsItems = await _newsService.SearchNewsAsync(search, limit);
             var response = newsItems.Select(n => ResponseNews.FromDomain(n));
             return Ok(response);
         }

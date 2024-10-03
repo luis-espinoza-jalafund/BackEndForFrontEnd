@@ -45,9 +45,9 @@ public class NewsService : INewsService
         return await _newsRepository.DeleteAsync(id);
     }
 
-    public async Task<IEnumerable<News>> GetAllNewsAsync()
+    public async Task<IEnumerable<News>> GetAllNewsAsync(int? limit = null)
     {
-        return await _newsRepository.GetAllAsync();
+        return await _newsRepository.GetAllAsync(limit);
     }
 
     public async Task<IEnumerable<News>> GetLatestNewsAsync(int quantity)
@@ -55,9 +55,9 @@ public class NewsService : INewsService
         return await _newsRepository.GetLatestNewsAsync(quantity);
     }
 
-    public async Task<IEnumerable<News>> GetNewsByCategoryAsync(string category)
+    public async Task<IEnumerable<News>> GetNewsByCategoryAsync(string category, int? limit = null)
     {
-        return await _newsRepository.GetNewsByCategoryAsync(category);
+        return await _newsRepository.GetNewsByCategoryAsync(category, limit);
     }
 
     public async Task<News?> GetNewsByIdAsync(Guid id)
@@ -75,9 +75,9 @@ public class NewsService : INewsService
         return await _newsRepository.GetPaginatedNewsAsync(pageNumber, pageSize);
     }
 
-    public async Task<IEnumerable<News>> SearchNewsAsync(string search)
+    public async Task<IEnumerable<News>> SearchNewsAsync(string search, int? limit = null)
     {
-        return await _newsRepository.SearchNewsAsync(search);
+        return await _newsRepository.SearchNewsAsync(search, limit);
     }
 
     public async Task<News> UpdateNewsAsync(Guid id, CreateNews news)

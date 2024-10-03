@@ -1,6 +1,7 @@
 using Domain.DTOs;
 using BackEndForFrontEnd.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace BackEndForFrontEnd.Controllers;
 
@@ -10,6 +11,18 @@ public class UserController : BaseController
     public UserController(IUserService userService)
     {
         _userService = userService;
+    }
+    private bool IsMobileRequest(HttpRequest request)
+    {
+        var userAgent = request.Headers["User-Agent"].ToString();
+        return Regex.IsMatch(userAgent, 
+            "(android|bb\\d+|meego).+mobile|" +
+            "avantgo|bada\\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|" +
+            "ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|" +
+            "opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\\/|plucker|pocket|psp|" +
+            "series(4|6)0|symbian|treo|up\\.(browser|link)|vodafone|wap|windows ce|" +
+            "xda|xiino", 
+            RegexOptions.IgnoreCase);
     }
 
     [HttpPost]
@@ -40,7 +53,9 @@ public class UserController : BaseController
     [ProducesResponseType(typeof(IEnumerable<ResponseUser>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAllUsers()
     {
-        var users = await _userService.GetAllUsersAsync();
+        var isMobile = IsMobileRequest(Request);
+        int? limit = isMobile ? 20 : null;
+        var users = await _userService.GetAllUsersAsync(limit);
         var response = users.Select(u => ResponseUser.FromDomain(u));
         return Ok(response);
     }
