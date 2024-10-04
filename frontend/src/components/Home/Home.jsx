@@ -1,5 +1,5 @@
 import React from "react";
-import AllNews from "../../pages/page";
+import AllNews from "../../pages/news-category/page";
 
 function Home() {
   return (
