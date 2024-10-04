@@ -9,10 +9,19 @@ const ClimateChangePage = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const data = await getNewsByCategory('climate-change'.toLowerCase());
-        setArticles(data.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate)));
+        const data = await getNewsByCategory("climate-change".toLowerCase());
+        const formattedArticles = data.map((article) => ({
+          id: article.id,
+          title: article.title,
+          image: article.images,
+          date: article.creationDate,
+          content: article.content,
+        }));
+        setArticles(
+          formattedArticles.sort((a, b) => new Date(b.date) - new Date(a.date))
+        );
       } catch (error) {
-        console.error('Error fetching news:', error);
+        console.error("Error fetching news:", error);
       }
     };
 
@@ -21,10 +30,16 @@ const ClimateChangePage = () => {
 
   return (
     <div>
-      <ComponentGrid 
-        items={articles} 
-        ItemComponent={NewsItem} 
-        itemsPerPage={12} 
+      <ComponentGrid
+        items={articles.map((article) => ({
+          id: article.id,
+          title: article.title,
+          image: article.image,
+          date: article.creationDate,
+          content: article.content,
+        }))}
+        ItemComponent={NewsItem}
+        itemsPerPage={12}
         columns={4}
         containerClassName="news-grid-container"
         gridClassName="news-grid"

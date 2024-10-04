@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import NewsItem from '../../../components/News/NewsItem';
-import ComponentGrid from '../../../components/Grid/ComponentGrid';
-import { getNewsByCategory } from '../../../services/ApiNews';
+import React, { useState, useEffect } from "react";
+import NewsItem from "../../../components/News/NewsItem";
+import ComponentGrid from "../../../components/Grid/ComponentGrid";
+import { getNewsByCategory } from "../../../services/ApiNews";
 
 const HealthPage = () => {
   const [articles, setArticles] = useState([]);
@@ -9,10 +9,19 @@ const HealthPage = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const data = await getNewsByCategory('health');
-        setArticles(data.sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate)));
+        const data = await getNewsByCategory("health");
+        const formattedArticles = data.map((article) => ({
+          id: article.id,
+          title: article.title,
+          image: article.images,
+          date: article.creationDate,
+          content: article.content,
+        }));
+        setArticles(
+          formattedArticles.sort((a, b) => new Date(b.date) - new Date(a.date))
+        );
       } catch (error) {
-        console.error('Error fetching news:', error);
+        console.error("Error fetching news:", error);
       }
     };
 
@@ -21,10 +30,10 @@ const HealthPage = () => {
 
   return (
     <div>
-      <ComponentGrid 
-        items={articles} 
-        ItemComponent={NewsItem} 
-        itemsPerPage={12} 
+      <ComponentGrid
+        items={articles}
+        ItemComponent={NewsItem}
+        itemsPerPage={12}
         columns={4}
         containerClassName="news-grid-container"
         gridClassName="news-grid"

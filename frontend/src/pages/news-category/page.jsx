@@ -10,7 +10,16 @@ const AllNews = () => {
     const fetchArticles = async () => {
       try {
         const data = await getAllNews();
-        setArticles(data);
+        const formattedArticles = data.map((article) => ({
+          id: article.id,
+          title: article.title,
+          image: article.images,
+          date: article.creationDate,
+          content: article.content,
+        }));
+        setArticles(
+          formattedArticles.sort((a, b) => new Date(b.date) - new Date(a.date))
+        );
       } catch (error) {
         console.error("Error fetching articles:", error);
       }

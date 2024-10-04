@@ -9,7 +9,7 @@ namespace Domain.DTOs
         string Content,
         string Images,
         string Category,
-        DateTime CreationDate
+        string CreationDate
     )
     {
         public static ResponseNews FromDomain(News news)
@@ -21,7 +21,7 @@ namespace Domain.DTOs
                 news.Content,
                 news.Images,
                 news.Category,
-                news.CreationDate
+                news.CreationDate.ToString("yyyy-MM-ddTHH:mm:ssZ")
             );
         }
     }
