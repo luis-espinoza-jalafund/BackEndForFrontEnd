@@ -2,9 +2,18 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5031/api/v1';
 
+
+const getUserAgent = () => {
+  return navigator.userAgent || 'unknown';
+};
+
 export const getAllNews = async () => {
   try {
-    const response = await axios.get(`${API_URL}/News`);
+    const response = await axios.get(`${API_URL}/News`, {
+      headers: {
+        'User-Agent': getUserAgent(),
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching news:', error);
@@ -53,7 +62,11 @@ export const deleteNews = async (id) => {
 
 export const getNewsByCategory = async (category) => {
   try {
-    const response = await axios.get(`${API_URL}/News/category/${category}`);
+    const response = await axios.get(`${API_URL}/News/category/${category}`, {
+      headers: {
+        'User-Agent': getUserAgent(),
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error fetching news for category ${category}:`, error);
@@ -73,7 +86,11 @@ export const getLatestNews = async (quantity) => {
 
 export const searchNews = async (search) => {
   try {
-    const response = await axios.get(`${API_URL}/News/search/${search}`);
+    const response = await axios.get(`${API_URL}/News/search/${search}`, {
+      headers: {
+        'User-Agent': getUserAgent(),
+      },
+    });
     return response.data;
   } catch (error) {
     console.error(`Error searching news with query ${search}:`, error);
