@@ -9,7 +9,7 @@ const ClimateChangePage = () => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const data = await getNewsByCategory("climate-change".toLowerCase());
+        const data = await getNewsByCategory("climate-change");
         const formattedArticles = data.map((article) => ({
           id: article.id,
           title: article.title,

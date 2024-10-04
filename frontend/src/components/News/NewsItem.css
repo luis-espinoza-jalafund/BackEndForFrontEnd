@@ -4,7 +4,7 @@
 .news-item {
   width: 100%;
   max-width: 392px;
-  height: 593.25px;
+  height: auto;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -51,8 +51,6 @@
   font-family: "Roboto", sans-serif;
   font-weight: 350;
   padding: 16px;
-  height: 300px;
-  overflow-y: auto;
 }
 
 .news-item-date {
@@ -76,15 +74,9 @@
 @media (max-width: 768px) {
   .news-item {
     max-width: 100%;
-    height: auto;
   }
 
   .news-item-image {
     height: 200px;
-  }
-
-  .news-item-content {
-    height: auto;
-    max-height: 300px;
   }
 }
