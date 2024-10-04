@@ -1,10 +1,10 @@
 import React from "react";
+import AllNews from "../../pages/news-category/page";
 
 function Home() {
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Home page where news will be displayed</p>
+      <AllNews />
     </div>
   );
 }
