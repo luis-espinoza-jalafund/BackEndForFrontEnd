@@ -23,7 +23,7 @@ public class NewsService : INewsService
             Content = news.Content,
             Images = news.Images,
             Category = news.Category,
-            CreationDate = DateTime.Now
+            CreationDate = DateTime.UtcNow
         };
         var result = await _newsRepository.CreateAsync(newNew);
 

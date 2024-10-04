@@ -23,6 +23,13 @@
     font-family: "Bree Serif", serif;
     font-style: normal;
     text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.redirect:hover {
+    color: #eb340b; 
+    transform: scale(1.1); 
+    text-decoration: underline; 
 }
 
 @media (max-width: 768px) {

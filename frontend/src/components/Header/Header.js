@@ -6,21 +6,21 @@ function Header() {
   return (
     <header className='app-header'>
       <nav className='nav-links'>
-        <label className='redirect'>
+        <Link to='/news/climate-change' className='redirect'>
           Climate Change
-        </label>
-        <label className='redirect'>
+        </Link>
+        <Link to='/news/politics' className='redirect'>
           Politics
-        </label>
+        </Link>
         <Link to='/' className='redirect'>
           Home
         </Link>
-        <label className='redirect'>
+        <Link to='/news/technology' className='redirect'>
           Technology
-        </label>
-        <label className='redirect'>
+        </Link>
+        <Link to='/news/health' className='redirect'>
           Health
-        </label>
+        </Link>
       </nav>
     </header>
   );
