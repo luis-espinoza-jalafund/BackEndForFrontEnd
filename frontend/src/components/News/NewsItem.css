@@ -71,6 +71,11 @@
   line-height: 1.5;
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media (max-width: 768px) {
   .news-item {
     max-width: 100%;
