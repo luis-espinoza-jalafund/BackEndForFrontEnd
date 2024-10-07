@@ -36,7 +36,7 @@ public class NewsRepository : INewsRepository
 
     public async Task<IEnumerable<News>> GetAllAsync(int? limit = null)
     {
-        string sql = "SELECT Id, Title, Content, Images, Category, CreationDate FROM News";
+        string sql = "SELECT Id, Title, Content, Images, Category, CreationDate FROM News ORDER BY CreationDate DESC";
 
          if (limit.HasValue && limit > 0)
         {
