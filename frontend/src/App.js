@@ -7,6 +7,7 @@ import ClimateChangePage from "./pages/news-category/climate-change/page";
 import PoliticsPage from "./pages/news-category/politics/page";
 import TechnologyPage from "./pages/news-category/technology/page";
 import HealthPage from "./pages/news-category/health/page";
+import NewsDetail from "./pages/news-category/news-details/newsDetails";
 
 function App() {
   return (
@@ -65,6 +66,14 @@ function App() {
           element={
             <Layout category="Users">
               <User />
+            </Layout>
+          }
+        />
+        <Route
+          path="/news/:id"
+          element={
+            <Layout category=''>
+              <NewsDetail />
             </Layout>
           }
         />

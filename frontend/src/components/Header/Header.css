@@ -45,7 +45,6 @@
 
 @media (max-width: 480px) {
     .nav-links {
-        grid-template-columns: 1fr;
         gap: 0.5rem;
     }
 

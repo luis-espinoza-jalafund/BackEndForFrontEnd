@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../News/NewsItem.css";
 
-const NewsItem = ({ title, image, date, content }) => {
+const NewsItem = ({ id, title, image, date, content }) => {
   const dateFormat = (date) => {
     const options = {
       year: "numeric",
@@ -35,7 +36,9 @@ const NewsItem = ({ title, image, date, content }) => {
       </div>
       <div className="news-item-content">
         <p className="news-item-date">{dateFormat(date)}</p>
-        <h2 className="news-item-title">{title}</h2>
+        <h2 className="news-item-title">
+          <Link to={`/news/${id}`} className='link'>{title}</Link>
+        </h2>
         <p className="news-item-text">{truncatedContent}</p>
       </div>
     </div>
